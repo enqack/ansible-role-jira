@@ -1,0 +1,46 @@
+---
+# defaults file for enqack.jira
+
+jira_version: 8.2.2
+
+jira_pkg: atlassian-jira-software-{{ jira_version }}.tar.gz
+
+jira_download_url: https://www.atlassian.com/software/jira/downloads/binary/{{ jira_pkg }}
+
+jira_context_path: ROOT
+
+jira_home_directory: /var/atlassian/application-data/jira
+
+jira_install_directory: /opt/atlassian/jira
+
+jira_database_url: postgresql://jira_user:jellyfish@postgresql:5432/jira_db
+
+jira_run_user: jira
+
+jira_run_group: jira
+
+jira_port: 8080
+
+jira_redirect_port: 8443
+
+jira_tomcat_shutdown_port: 8002
+
+jira_crowd_sso_enabled: false
+
+jira_crowd_base_url: http://crowd:8095/crowd
+
+jira_application_name: Jira
+
+jira_application_password: changeit
+
+jira_mail_enabled: false
+
+jira_mail_host: localhost
+
+jira_mail_user: jira
+
+jira_mail_password: changeit
+
+jira_mail_port: 25
+
+jira_mail_debug: false

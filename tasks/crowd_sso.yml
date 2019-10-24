@@ -1,0 +1,27 @@
+---
+# tasks file for enqack.jira
+
+- block:
+  - name: Create Crowd properties file
+    template:
+      src: "{{ role_path }}/templates/crowd.properties.j2"
+      dest: "{{ jira_install_directory }}/atlassian-jira/WEB-INF/classes/crowd.properties"
+      owner: "{{ jira_run_user }}"
+      group: "{{ jira_run_group }}"
+
+  - name: Set authenticator class to Crowd SSO
+    shell: |
+      xmlstarlet edit --pf --inplace \
+      --update "//security-config/authenticator/@class" \
+      --value "com.atlassian.jira.security.login.SSOSeraphAuthenticator" \
+      "{{ jira_install_directory }}/atlassian-jira/WEB-INF/classes/seraph-config.xml"
+
+  when: jira_crowd_sso_enabled | bool
+
+- name: Set authenticator class to Jira
+  shell: |
+    xmlstarlet edit --pf --inplace \
+    --update "//security-config/authenticator/@class" \
+    --value "com.atlassian.jira.security.login.JiraSeraphAuthenticator" \
+    "{{ jira_install_directory }}/atlassian-jira/WEB-INF/classes/seraph-config.xml"
+  when: not jira_crowd_sso_enabled | bool

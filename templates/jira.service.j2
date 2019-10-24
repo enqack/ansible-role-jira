@@ -1,0 +1,14 @@
+#jinja2: trim_blocks:False
+[Unit]
+Description=Jira Issue & Project Tracking Software
+After=network.target
+
+[Service]
+Type=forking
+User={% if jira_port <= 1024 %}root{% else %}{{ jira_run_user }}{% endif %}
+PIDFile={{ jira_install_directory }}/work/catalina.pid
+ExecStart={{ jira_install_directory }}/bin/start-jira.sh
+ExecStop={{ jira_install_directory }}/bin/stop-jira.sh
+
+[Install]
+WantedBy=multi-user.target

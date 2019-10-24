@@ -1,0 +1,20 @@
+---
+# tasks file for enqack.jira
+
+- name: Add daemon
+  template:
+    src: "{{ role_path }}/templates/jira.service.j2"
+    dest: "/etc/systemd/system/jira.service"
+    owner: "{{ jira_run_user }}"
+    group: "{{ jira_run_group }}"
+    mode: 0664
+
+- name: Force systemd to reread configs
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start daemon
+  systemd:
+    name: jira.service
+    enabled: true
+    state: restarted
