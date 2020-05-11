@@ -57,6 +57,27 @@
     group: "{{ jira_run_group }}"
     recurse: true
 
+- name: Configure plugin startup timeout
+  lineinfile:
+    path: "{{ jira_install_directory }}/bin/setenv.sh"
+    regexp: '^JVM_SUPPORT_RECOMMENDED_ARGS=".*"'
+    line: 'JVM_SUPPORT_RECOMMENDED_ARGS="-Datlassian.plugins.enable.wait={{ jira_plugin_timeout }}"'
+  when: jira_plugin_timeout is defined
+
+- name: Configure JVM min memory
+  lineinfile:
+    path: "{{ jira_install_directory }}/bin/setenv.sh"
+    regexp: '^JVM_MINIMUM_MEMORY=".*"'
+    line: 'JVM_MINIMUM_MEMORY="{{ jira_jvm_minimum_memory }}"'
+  when: jira_jvm_minimum_memory is defined
+
+- name: Configure JVM max memory
+  lineinfile:
+    path: "{{ jira_install_directory }}/bin/setenv.sh"
+    regexp: '^JVM_MAXIMUM_MEMORY=".*"'
+    line: 'JVM_MAXIMUM_MEMORY="{{ jira_jvm_maximum_memory }}"'
+  when: jira_jvm_maximum_memory is defined
+
 - name: Configure Tomcat
   template:
     src: "{{ role_path }}/templates/server.xml.j2"

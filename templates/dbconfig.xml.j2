@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jira-database-config>
-  <name>defaultDS</name>
+  <name>default_ds</name>
   <delegator-name>default</delegator-name>
   <database-type>postgres72</database-type>
+  <schema-name>public</schema-name>
   <jdbc-datasource>
     <url>jdbc:{{ jira_database_url | urlsplit('scheme') }}://{{ jira_database_url | urlsplit('hostname') }}:{{ jira_database_url | urlsplit('port') }}{{ jira_database_url | urlsplit('path') }}</url>
     <driver-class>org.postgresql.Driver</driver-class>
